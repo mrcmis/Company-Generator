@@ -3,5 +3,8 @@ package people;
 public enum Role {
     CEO,
     TEAMMANAGER,
-    DEVELOPER
+    DEVELOPER,
+    TESTER,
+    CONTRIBUTOR,
+    TEAMLEADER
 }

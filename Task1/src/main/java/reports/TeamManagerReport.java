@@ -1,34 +1,26 @@
 package reports;
 
 import people.Employee;
-
-import java.util.ArrayList;
-import java.util.List;
+import people.TeamManager;
 
 public class TeamManagerReport implements Report {
 
-    private final ArrayList<Employee> listOfEmployees;
+    private final TeamManager teamManager;
 
-    public TeamManagerReport(){
-        listOfEmployees = new ArrayList<Employee>();
+    public TeamManagerReport(TeamManager teamManager) {
+        this.teamManager = teamManager;
     }
 
     @Override
-    public List<Employee> getWorkList() {
-        return listOfEmployees;
-    }
+    public void showWork(int indentLevel) {
 
-    @Override
-    public void showWork(String name, int indentLevel) {
-        for (int i = 0; i < indentLevel; i++) {
-            System.out.print(" ");
-        }
-        System.out.println("TeamManager " + name + " hiring:");
-        for (Employee employee : listOfEmployees){
-            for (int i = 0; i < indentLevel; i++) {
-                System.out.print(" ");
-            }
-            employee.reportWork().showWork(employee.getName(), indentLevel + 5);
+        String output = String.format("%" + (indentLevel + 1) + "s", " ");
+        System.out.print(output);
+
+        System.out.println(teamManager.getRole() + " " + teamManager.getName() + " hiring:");
+        for (Employee employee : teamManager.getWorkList()) {
+            System.out.print(output);
+            employee.reportWork().showWork(indentLevel + 5);
         }
     }
 

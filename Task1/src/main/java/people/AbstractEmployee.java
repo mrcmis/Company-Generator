@@ -1,25 +1,25 @@
 package people;
 
-public abstract class AbstractEmployee implements Employee{
+public abstract class AbstractEmployee implements Employee {
 
-   private final String name;
-   final Role role;
+    private final String name;
+    private final Role role;
 
-    public AbstractEmployee(String empName, Role empRole){
-        name = empName;
-        role = empRole;
+    public AbstractEmployee(String name, Role role) {
+        this.name = name;
+        this.role = role;
     }
 
-    public String getName(){
+    public String getName() {
         return name;
     }
 
-    public Role getRole(){
+    public Role getRole() {
         return role;
     }
 
     @Override
-    public String toString(){
+    public String toString() {
         return getRole() + " " + getName();
     }
 
