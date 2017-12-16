@@ -1,35 +1,22 @@
 package reports;
 
-import people.Employee;
+import employees.TeamManager;
+import structures.PrintEmployeeService;
 
-import java.util.ArrayList;
-import java.util.List;
+public class TeamManagerReport extends AbstractReport {
 
-public class TeamManagerReport implements Report {
+    private final TeamManager teamManager;
 
-    private final ArrayList<Employee> listOfEmployees;
-
-    public TeamManagerReport(){
-        listOfEmployees = new ArrayList<Employee>();
+    public TeamManagerReport(TeamManager teamManager) {
+        this.teamManager = teamManager;
     }
 
     @Override
-    public List<Employee> getWorkList() {
-        return listOfEmployees;
-    }
-
-    @Override
-    public void showWork(String name, int indentLevel) {
-        for (int i = 0; i < indentLevel; i++) {
-            System.out.print(" ");
-        }
-        System.out.println("TeamManager " + name + " hiring:");
-        for (Employee employee : listOfEmployees){
-            for (int i = 0; i < indentLevel; i++) {
-                System.out.print(" ");
-            }
-            employee.reportWork().showWork(employee.getName(), indentLevel + 5);
-        }
+    public void show() {
+        teamManager.getAllSubordinatesList()
+                .stream()
+                .sorted(ReportComparator.employeeLexicalSort())
+                .forEach(PrintEmployeeService::printEmployee);
     }
 
 }
