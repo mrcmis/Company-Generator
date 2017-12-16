@@ -2,6 +2,9 @@ package reports;
 
 public interface Report {
 
-    void showWork(final int indentLevel);
+    void show();
 
+    public void setDescription(String description);
+
+    public void showDescription();
 }

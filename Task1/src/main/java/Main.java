@@ -1,15 +1,43 @@
+import employees.*;
 import structures.Firm;
+import structures.FirmVisualizer;
 import structures.RandomFirmFactory;
-import structures.Task;
 
 public class Main {
     public static void main(String[] args) {
 
-        Task task = new Task("AAAAAAAAAA", 3);
-        Task task1 = new Task("BBBBBbBB", 3);
+        Firm firm = new RandomFirmFactory().getRandomFirm();
 
-        Firm firm = new RandomFirmFactory().getRandomFirm(Integer.parseInt(args[0]));
-        firm.getCeoDirector().reportWork().showWork(0);
+        Developer myDeveloper = new Developer.DeveloperBuilder()
+                .setName("sampleName")
+                .setSurname("sampleSurname")
+                .setRole(Role.TESTER)
+                .setEmail("sample@NOgmail.com")
+                .setUniversity("sample")
+                .setCountry("sample")
+                .setSex(Sex.MALE)
+                .setFreeResources(20)
+                .build();
 
+        TeamManager myCeo = new TeamManager.TeamManagerBuilder()
+                .setName("CEOname")
+                .setSurname("CEOsurname")
+                .setRole(Role.CEO)
+                .setEmail("ceo@gmail.com")
+                .setUniversity("ceuUni")
+                .setCountry("Ceoctr")
+                .setSex(Sex.MALE)
+                .setLimitOfEmployees(100)
+                .setHireConditionFunction(HireConditions.requireNothing())
+                .build();
+
+        firm.getCeoDirector().reportWork().show();
+        firm.setCeoDirector(myCeo);
+        myCeo.hire(myDeveloper);
+        myCeo.reportWork().show();
+
+        new FirmVisualizer().visualize(firm);
+
+        System.out.println(firm.toString());
     }
 }

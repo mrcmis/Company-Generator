@@ -1,4 +1,4 @@
-package people;
+package employees;
 
 import reports.Report;
 import structures.Task;
@@ -7,12 +7,21 @@ public interface Employee {
 
     String getName();
 
+    String getSurname();
+
+    Sex getSex();
+
+    String getEmail();
+
+    String getUniversity();
+
+    String getCountry();
+
     Role getRole();
 
-    /**
-     * @return true if task has been properly assigned, if not - false
-     */
     boolean assign(Task task);
+
+    int getUnitOfWork();
 
     Report reportWork();
 }

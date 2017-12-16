@@ -1,4 +1,4 @@
-package people;
+package employees;
 
 public enum Role {
     CEO,

@@ -1,17 +1,16 @@
 package structures;
 
+import org.apache.commons.lang3.RandomStringUtils;
+
 import java.util.Random;
 
 public class RandomString {
 
-    public String randomString;
-    Random generator = new Random();
+    public static String getRandomString() {
 
-    public String getRandomString() {
-        randomString = "";
-        for (int j = 0; j < 2 + (generator.nextInt(15)); j++) {
-            randomString += (char) ('a' + new Random().nextInt('z' - 'a'));
-        }
+        Random generator = new Random();
+        String randomString = RandomStringUtils.randomAlphabetic(generator.nextInt(15));
+
         return randomString;
     }
 

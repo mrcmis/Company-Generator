@@ -1,9 +1,9 @@
 package reports;
 
-import people.Developer;
-import structures.Task;
+import employees.Developer;
 
-public class DeveloperReport implements Report {
+
+public class DeveloperReport extends AbstractReport {
 
     private final Developer developer;
 
@@ -11,17 +11,12 @@ public class DeveloperReport implements Report {
         this.developer = developer;
     }
 
-    public void showWork(int indentLevel) {
-        String output = String.format("%"+ indentLevel +"s", " ");
-        System.out.print(output);
-
-        System.out.println(developer.getRole() + " " + developer.getName() + " that: ");
-
-        for (Task task : developer.getWorkList()) {
-            output = String.format("%"+ 2*indentLevel +"s", " ");
-            System.out.print(output);
-            System.out.println(task);
-        }
+    @Override
+    public void show() {
+        developer.getTaskList()
+                .stream()
+                .sorted(ReportComparator.taskWeightSort())
+                .forEach((task) -> System.out.println("  " + task));
     }
 
 }

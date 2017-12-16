@@ -1,28 +1,30 @@
 package structures;
 
-import people.Employee;
-import people.Manager;
-import people.PersonFactory;
-import people.Role;
+import employees.Employee;
+import employees.Manager;
+import employees.RandomPersonFactory;
+import employees.Role;
 
 import java.util.Random;
 
 public class RandomFirmFactory {
 
-    Firm firm;
-    Random generator = new Random();
+    private Firm firm;
+    private Random generator = new Random();
 
-    public Firm getRandomFirm(int randomLevel) {
-        firm = new Firm(new RandomString().getRandomString());
+    public Firm getRandomFirm() {
+        firm = new Firm(RandomString.getRandomString());
+        int NUMBER_OF_LEVELS = generator.nextInt(7) + 1;
 
-        hireRandom(firm.getCeoDirector(), randomLevel);
+        firm.setCeoDirector(new RandomPersonFactory().getRandomCEO());
+        hireRandom(firm.getCeoDirector(), NUMBER_OF_LEVELS);
 
-        while (firm.getCeoDirector().assign(getRandomTask())) ;
+        while (firm.getCeoDirector().assign(RandomTaskFactory.getRandomTask())) ;
 
         return firm;
     }
 
-    public void hireRandom(Manager manager, int maxLevel) {
+    private void hireRandom(Manager manager, int maxLevel) {
         Employee randomEmployee;
         if (maxLevel == 0) {
             return; //recursion end
@@ -37,37 +39,15 @@ public class RandomFirmFactory {
         }
     }
 
-    public Employee getRandomEmployee() {
+    private Employee getRandomEmployee() {
 
-        PersonFactory personFactory = new PersonFactory();
-        String randomName = new RandomString().getRandomString();
-        int randomLimit = 6 + generator.nextInt(10);
+        RandomPersonFactory personFactory = new RandomPersonFactory();
+        final double CHANCE_TO_GET_DEV = 0.66;
 
-        switch (generator.nextInt(6)) {
-            case 0:
-                return personFactory.getPerson(Role.TEAMMANAGER,
-                        randomName, randomLimit);
-            case 1:
-                return personFactory.getPerson(Role.TEAMMANAGER,
-                        randomName, randomLimit);
-            case 2:
-                return personFactory.getPerson(Role.DEVELOPER,
-                        randomName, randomLimit);
-            case 3:
-                return personFactory.getPerson(Role.TESTER,
-                        randomName, randomLimit);
-            case 4:
-                return personFactory.getPerson(Role.TEAMLEADER,
-                        randomName, randomLimit);
-            case 5:
-                return personFactory.getPerson(Role.CONTRIBUTOR,
-                        randomName, randomLimit);
-            default:
-                return null;
+        if (generator.nextDouble() < CHANCE_TO_GET_DEV) {
+            return personFactory.getRandomDeveloper();
+        } else {
+            return personFactory.getRandomManager();
         }
-    }
-
-    public Task getRandomTask() {
-        return new Task(new RandomString().getRandomString(), generator.nextInt(6) + 1);
     }
 }

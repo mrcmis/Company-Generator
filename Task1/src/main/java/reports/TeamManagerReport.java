@@ -1,9 +1,9 @@
 package reports;
 
-import people.Employee;
-import people.TeamManager;
+import employees.TeamManager;
+import structures.PrintEmployeeService;
 
-public class TeamManagerReport implements Report {
+public class TeamManagerReport extends AbstractReport {
 
     private final TeamManager teamManager;
 
@@ -12,16 +12,11 @@ public class TeamManagerReport implements Report {
     }
 
     @Override
-    public void showWork(int indentLevel) {
-
-        String output = String.format("%" + (indentLevel + 1) + "s", " ");
-        System.out.print(output);
-
-        System.out.println(teamManager.getRole() + " " + teamManager.getName() + " hiring:");
-        for (Employee employee : teamManager.getWorkList()) {
-            System.out.print(output);
-            employee.reportWork().showWork(indentLevel + 5);
-        }
+    public void show() {
+        teamManager.getAllSubordinatesList()
+                .stream()
+                .sorted(ReportComparator.employeeLexicalSort())
+                .forEach(PrintEmployeeService::printEmployee);
     }
 
 }
